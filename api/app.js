@@ -5,13 +5,15 @@ import userRoute from './routes/user.routes.js';
 
 const app = express();
 
+app.use(express.json());
+
 app.use("/api/test", (req, res) => {
      console.log("Router works");
      res.send("It Works!")
 });
 
-app.use("/api/posts", authRoute);
-app.use("/api/auth", postRoute);
+app.use("/api/posts", postRoute);
+app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 
 
