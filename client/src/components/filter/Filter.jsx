@@ -42,8 +42,11 @@ function Filter(){
         </div>
         <div className="item">
           <label htmlFor="bedroom">Bedroom</label>
-          <input type="text" id="bedroom" name='bedroom' placeholder='City Location'/>
+          <input type="text" id="bedroom" name='bedroom' placeholder='any'/>
         </div>
+        <button onClick={()=>{}}>
+          <img src="/search.png" alt="" />
+        </button>
       </div>
     </div>
   )
