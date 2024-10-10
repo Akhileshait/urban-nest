@@ -12,6 +12,7 @@ import {
   Route,
   Link,
 } from "react-router-dom";
+import ProfilePage from "./routes/profilePage/profilePage.jsx"
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         { path: "/", element: <HomePage/> },
         { path: "/list", element: <ListPage/> },
         { path: "/:id", element: <SinglePage/> },
+        { path: "/profile", element: <ProfilePage/> },
       ],
     },
   ]);

@@ -3,8 +3,8 @@ import Slider from "../../components/slider/slider";
 import { singlePostData, userData } from "../../lib/dummy_data";
 import Map from "../../components/map/map";
 
-function SinglePage() {
 
+function SinglePage() {
 
   return (
     <div className="singlePage">
