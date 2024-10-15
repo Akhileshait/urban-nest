@@ -13,6 +13,8 @@ import {
   Link,
 } from "react-router-dom";
 import ProfilePage from "./routes/profilePage/profilePage.jsx"
+import Register from "./routes/register/register.jsx"
+import Login from "./routes/login/login.jsx"
 
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
         { path: "/list", element: <ListPage/> },
         { path: "/:id", element: <SinglePage/> },
         { path: "/profile", element: <ProfilePage/> },
+        { path: "/register", element: <Register/> },
+        { path: "/login", element: <Login/> },
       ],
     },
   ]);
