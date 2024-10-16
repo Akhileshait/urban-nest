@@ -1,0 +1,102 @@
+[33mcommit 16b3fc1b3f5e7f0b95f83b731a8da9649e8d9d01[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Tue Oct 15 17:43:07 2024 +0530
+
+    register and login axios
+
+[33mcommit a07c4a29c7ea706e270273974c8bcae1478bd7b0[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Tue Oct 15 01:02:16 2024 +0530
+
+    register login logout
+
+[33mcommit 1df5597e517dc69f7851a3a4d2bf291dacb7cd74[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Mon Oct 14 16:38:31 2024 +0530
+
+    ui complete
+
+[33mcommit 886de474ea410aa5f5c7c6c93ae0d2627eb748ea[m[33m ([m[1;32mmaster[m[33m)[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Thu Oct 10 22:32:24 2024 +0530
+
+    chat funtionality
+
+[33mcommit 8f7492919043d2b21c73c1598f4fcc655be53f06[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Thu Oct 10 19:03:41 2024 +0530
+
+    updates
+
+[33mcommit ccb6690f9e9f3a1fabcaefb7c9a7494b3da20206[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Wed Oct 9 22:14:01 2024 +0530
+
+    added map
+
+[33mcommit 2fa47ce8f00fd53dbc4e31689d95218103c5002e[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Wed Oct 9 15:25:21 2024 +0530
+
+    filter option added
+
+[33mcommit 4427895708d3477a9b65460e88509aea2246feb7[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Wed Oct 9 01:37:25 2024 +0530
+
+    added listPage, filter, cards
+
+[33mcommit 05fc967a379cee5c85de6cea7afb676ce0b1f847[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Tue Oct 8 12:24:07 2024 +0530
+
+    react routing
+
+[33mcommit 913b7506c59440f4a4d427dafa5b8ff992839e10[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Tue Oct 8 12:09:36 2024 +0530
+
+    added homepage , ListPage, layout
+
+[33mcommit c63dd8fe3a0bd19ea9ee38ed6f561121489270d4[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Sun Oct 6 20:22:49 2024 +0530
+
+    removed client submodule
+
+[33mcommit 5bec8dbdfe75bf63a47899208a14aee794793df6[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Sun Oct 6 20:11:22 2024 +0530
+
+    react ui setup
+
+[33mcommit 769d3572adcc574871cba066d3f351da5a7b0317[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Sun Oct 6 20:01:44 2024 +0530
+
+    resolve merges
+
+[33mcommit ca124b132bf422a47449c811de23ff34cd13e55c[m
+Merge: 1af5d76 7a85885
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Sun Oct 6 20:01:25 2024 +0530
+
+    Merge branch 'main' of https://github.com/Akhileshait/urban-nest
+
+[33mcommit 7a8588576c5e12a3869a3bd929c6defa34532f2e[m
+Author: Akhilesh <126186908+Akhileshait@users.noreply.github.com>
+Date:   Sun Oct 6 19:54:47 2024 +0530
+
+    Initial commit
+
+[33mcommit 1af5d7632e677a70f0f5cdd3efd1607f947263ea[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Sun Oct 6 18:30:04 2024 +0530
+
+    updates commit
+
+[33mcommit 0b0a5f76556907a073422ff9760fbcf0323a97b1[m
+Author: Akhileshait <akhileshpatidar989368@gmail.com>
+Date:   Sun Oct 6 17:53:51 2024 +0530
+
+    initial commit

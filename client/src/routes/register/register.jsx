@@ -1,7 +1,7 @@
 import "./register.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import apiRequest from "../../lib/apiRequest";
+import apiRequest from "../../lib/apiRequest.js";
 
 function Register() {
   const [error, setError] = useState("");
@@ -25,6 +25,8 @@ function Register() {
         email,
         password,
       });
+
+      console.log(res);
 
       navigate("/login");
     } catch (err) {
