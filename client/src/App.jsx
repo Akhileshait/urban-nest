@@ -2,7 +2,7 @@
 import "./components/navbar/Navbar.jsx"
 import HomePage from "./routes/homePage/homePage.jsx"
 import ListPage from "./routes/listPage/listPage.jsx"
-import Layout from "./routes/layout/layout.jsx"
+import {Layout,  RequireAuth } from "./routes/layout/layout.jsx"
 import SinglePage from "./routes/singlePage/singlePage.jsx"
 import "./index.scss"
 
@@ -15,6 +15,7 @@ import {
 import ProfilePage from "./routes/profilePage/profilePage.jsx"
 import Register from "./routes/register/register.jsx"
 import Login from "./routes/login/login.jsx"
+import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage.jsx"
 
 
 function App() {
@@ -29,11 +30,18 @@ function App() {
         { path: "/", element: <HomePage/> },
         { path: "/list", element: <ListPage/> },
         { path: "/:id", element: <SinglePage/> },
-        { path: "/profile", element: <ProfilePage/> },
         { path: "/register", element: <Register/> },
         { path: "/login", element: <Login/> },
       ],
     },
+    {
+      path:"/",
+      element: <RequireAuth/>,
+      children: [
+        { path: "/profile", element: <ProfilePage/> },
+        { path: "/profile/update", element: <ProfileUpdatePage/> },
+      ]
+    }
   ]);
 
   return (

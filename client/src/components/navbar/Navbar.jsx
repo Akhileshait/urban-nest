@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 function Navbar() {
      const [open, setOpen]=useState(false);
-     const user = true;
+     const { currentUser } = useContext(AuthContext);
+
+     
 
      return (
           <nav>
@@ -20,10 +23,10 @@ function Navbar() {
                </div>
                <div className="right">
                     {
-                         user ? (
+                         currentUser ? (
                               <div className="user">
-                                   <img src="" alt="" />
-                                   <span>John Doe</span>
+                                   <img src={currentUser.avatar || "noavatar.jpg"} alt="" />
+                                   <span>{currentUser.username}</span>
                                    <Link to="/profile" className="profile">
                                    <div className="notification">3</div>
                                    <span>Profile</span>
@@ -31,8 +34,8 @@ function Navbar() {
                               </div>
                          ):(
                               <>
-                              <a href="#">Sign in</a>
-                              <a href="#" className="register">Sign up</a>
+                              <a href="/login">Sign in</a>
+                              <a href="/register" className="register">Sign up</a>
                               </>
                          )
                     }
@@ -44,8 +47,8 @@ function Navbar() {
                          <a href="">About</a>
                          <a href="">Contact</a>
                          <a href="">Agents</a>
-                         <a href="">Sign in</a>
-                         <a href="">Sign up</a>
+                         <a href="/login">Sign in</a>
+                         <a href="/register">Sign up</a>
                          
                     </div>
                     

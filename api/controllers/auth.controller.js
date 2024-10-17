@@ -53,7 +53,7 @@ const login = async (req, res)=>{
                httpOnly:true,
                maxAge:age,
                // secure:true
-          }).status(200).json({message:"Login successful"});
+          }).status(200).json({userInfo});
 
      } catch (err) {
           console.log(err);
