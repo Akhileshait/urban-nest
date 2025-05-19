@@ -9,9 +9,14 @@
     overflow: scroll;
   }
 
+  .details::-webkit-scrollbar {
+    display: none;
+  }
+  
   .details {
     flex: 3;
     overflow-y: scroll;
+    
     padding-bottom: 50px;
 
     @include md{

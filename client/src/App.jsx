@@ -16,6 +16,8 @@ import ProfilePage from "./routes/profilePage/profilePage.jsx"
 import Register from "./routes/register/register.jsx"
 import Login from "./routes/login/login.jsx"
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage.jsx"
+import NewPostPage from "./routes/newPostPage/newPostPage.jsx"
+import { listPageLoader, singlePageLoader } from "./lib/loaders.js"
 
 
 function App() {
@@ -28,8 +30,8 @@ function App() {
       ),
       children: [
         { path: "/", element: <HomePage/> },
-        { path: "/list", element: <ListPage/> },
-        { path: "/:id", element: <SinglePage/> },
+        { path: "/list", element: <ListPage/>, loader: listPageLoader},
+        { path: "/:id", element: <SinglePage/>, loader: singlePageLoader},
         { path: "/register", element: <Register/> },
         { path: "/login", element: <Login/> },
       ],
@@ -40,6 +42,7 @@ function App() {
       children: [
         { path: "/profile", element: <ProfilePage/> },
         { path: "/profile/update", element: <ProfileUpdatePage/> },
+        { path: "/add", element: <NewPostPage/> },
       ]
     }
   ]);

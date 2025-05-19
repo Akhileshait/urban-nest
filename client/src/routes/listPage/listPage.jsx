@@ -5,8 +5,10 @@ import Filter from '../../components/filter/Filter.jsx';
 import Card from '../../components/card/card.jsx';
 import Map from '../../components/map/map.jsx';
 
+import { useLoaderData } from 'react-router-dom';
+
 function ListPage(){
-  const data=listData;
+  const posts=useLoaderData();
 
   return (
     <div className='listPage'>
@@ -16,7 +18,7 @@ function ListPage(){
           <Filter/>
           
 
-          {data.map(item=>(
+          {posts.map(item=>(
             <Card key={item.id} item={item}></Card>
           )
           )}
@@ -25,7 +27,7 @@ function ListPage(){
       </div>
 
       <div className="mapContainer">
-        <Map items={data}/>
+        <Map items={posts}/>
       </div>
     </div>
   )

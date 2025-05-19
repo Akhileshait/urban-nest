@@ -31,6 +31,9 @@ function Chat(){
                     <img src="" alt="" />
                     <span>John Doe</span>
                 </div>
+                <span className="close" onClick={() => {}}>
+                    X
+                    </span>
             </div>
             <div className="center">
                 <div className="chatMessage">
