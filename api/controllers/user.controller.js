@@ -140,4 +140,34 @@ const profilePosts = async (req, res) => {
   }
 };
 
-export { getUsers, getUser, updateUser, deleteUser, savePost, profilePosts };
+export const getNotificationNumber = async (req, res) => {
+  const tokenUserId = req.userId;
+  try {
+    const number = await prisma.chat.count({
+      where: {
+        userIDs: {
+          hasSome: [tokenUserId],
+        },
+        NOT: {
+          seenBy: {
+            hasSome: [tokenUserId],
+          },
+        },
+      },
+    });
+    res.status(200).json(number);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to get profile posts!" });
+  }
+};
+
+export {
+  getUsers,
+  getUser,
+  updateUser,
+  deleteUser,
+  savePost,
+  profilePosts,
+  getNotificationNumber,
+};
