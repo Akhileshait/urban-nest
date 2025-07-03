@@ -1,15 +1,15 @@
-import { listData } from '../../lib/dummy_data'
-import Card from '../card/card'
-import './list.scss'
+import Card from "../card/card";
+import "./list.scss";
 
-function List(){
+function List({ posts }) {
+  console.log("List component posts:", posts);
   return (
-    <div className='list'>
-        {listData.map(item=>(
-            <Card key={item.id} item={item}/>
-        ))}
+    <div className="list">
+      {posts?.map((item) => (
+        <Card key={item.id} item={item} />
+      ))}
     </div>
-  )
+  );
 }
 
-export default List
+export default List;

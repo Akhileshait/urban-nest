@@ -56,11 +56,11 @@ function SearchBar() {
           placeholder="Max Price"
           onChange={handleChange}
         />
-        <a href="">
+        <Link to={"/list?type=" + query.type + "&city=" + query.city + "&minPrice=" + query.minPrice + "&maxPrice=" + query.maxPrice}>
           <button>
             <img src="/search.png" alt="" />
           </button>
-          </a>
+        </Link>
       </form>
     </div>
   );

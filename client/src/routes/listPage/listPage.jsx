@@ -1,36 +1,47 @@
-import './listPage.scss'
+import "./listPage.scss";
 
-import {listData} from "../../lib/dummy_data.js";
-import Filter from '../../components/filter/Filter.jsx';
-import Card from '../../components/card/card.jsx';
-import Map from '../../components/map/map.jsx';
+import { listData } from "../../lib/dummy_data.js";
+import Filter from "../../components/filter/Filter.jsx";
+import Card from "../../components/card/card.jsx";
+import Map from "../../components/map/map.jsx";
 
-import { useLoaderData } from 'react-router-dom';
+import { Await, useLoaderData } from "react-router-dom";
+import { Suspense } from "react";
 
-function ListPage(){
-  const posts=useLoaderData();
+function ListPage() {
+  const posts = useLoaderData();
 
   return (
-    <div className='listPage'>
+    <div className="listPage">
       <div className="listContainer">
-
         <div className="wrapper">
-          <Filter/>
-          
+          <Filter />
 
-          {posts.map(item=>(
-            <Card key={item.id} item={item}></Card>
-          )
-          )}
+          <Suspense fallback={<div>Loading...</div>}>
+            <Await
+              resolve={posts.postResponse}
+              errorElement={<div>Error loading post!</div>}
+            >
+              {(postResponse) =>
+                postResponse.map((item) => <Card key={item.id} item={item} />)
+              }
+            </Await>
+          </Suspense>
         </div>
-
       </div>
 
       <div className="mapContainer">
-        <Map items={posts}/>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Await
+            resolve={posts.postResponse}
+            errorElement={<div>Error loading post!</div>}
+          >
+            {(postResponse) => <Map items={postResponse} />}
+          </Await>
+        </Suspense>
       </div>
     </div>
-  )
+  );
 }
 
-export default ListPage
+export default ListPage;

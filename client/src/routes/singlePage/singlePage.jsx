@@ -2,11 +2,31 @@ import "./singlePage.scss";
 import Slider from "../../components/slider/slider";
 import { singlePostData, userData } from "../../lib/dummy_data";
 import Map from "../../components/map/map";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import apiRequest from "../../lib/apiRequest";
 
 function SinglePage() {
   const post = useLoaderData();
+
+  const [saved, setSaved] = useState(post.isSaved);
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleSave = async () => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+    setSaved(!saved);
+    try {
+      await apiRequest.post("/users/save", { postId: post.id });
+    } catch (error) {
+      console.error("Error saving post:", error);
+      setSaved(!saved); // Revert the saved state if the request fails
+    }
+  };
 
   return (
     <div className="singlePage">
@@ -28,9 +48,12 @@ function SinglePage() {
                 <span>{userData.name}</span>
               </div>
             </div>
-            <div className="bottom" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(post.postDetail.desc)}}>
-            
-            </div>
+            <div
+              className="bottom"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(post.postDetail.desc),
+              }}
+            ></div>
           </div>
         </div>
       </div>
@@ -42,22 +65,22 @@ function SinglePage() {
               <img src="/utility.png" alt="" />
               <div className="featureText">
                 <span>Utilities</span>
-                {
-                  post.postDetail.utilities==="owner"?
-                  <p>Owner is responsible</p>:
+                {post.postDetail.utilities === "owner" ? (
+                  <p>Owner is responsible</p>
+                ) : (
                   <p>Tenant is responsible</p>
-                }
+                )}
               </div>
             </div>
             <div className="feature">
               <img src="/pet.png" alt="" />
               <div className="featureText">
                 <span>Pet Policy</span>
-                {
-                  post.postDetail.utilities==="allowed"?
-                  <p>Pets Allowed</p>:
+                {post.postDetail.utilities === "allowed" ? (
+                  <p>Pets Allowed</p>
+                ) : (
                   <p>Pets Not Allowed</p>
-                }
+                )}
               </div>
             </div>
             <div className="feature">
@@ -85,14 +108,11 @@ function SinglePage() {
           </div>
           <p className="title">Nearby Places</p>
           <div className="listHorizontal">
-          <div className="feature">
+            <div className="feature">
               <img src="/school.png" alt="" />
               <div className="featureText">
                 <span>School</span>
-                <p>
-                  {post.postDetail.school}m
-                  away
-                </p>
+                <p>{post.postDetail.school}m away</p>
               </div>
             </div>
             <div className="feature">
@@ -119,9 +139,12 @@ function SinglePage() {
               <img src="/chat.png" alt="" />
               Send a Message
             </button>
-            <button>
+            <button
+              onClick={handleSave}
+              style={{ backgroundColor: saved ? "#fece51" : "white" }}
+            >
               <img src="/save.png" alt="" />
-              Save the Place
+              {saved ? "Saved" : "Save the Place"}
             </button>
           </div>
         </div>

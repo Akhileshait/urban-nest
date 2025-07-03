@@ -20,7 +20,7 @@ app.use("/api/test", testRoute);
 
 
 app.listen(
-     process.env.PORT || 3800,
+    process.env.PORT || 3800,
     ()=>{
       console.log('Server is running on port 3800');
     }
