@@ -35,8 +35,9 @@ const getPost = async (req, res) => {
       select: "username avatar",
     });
 
-    const postDetail = await PostDetail.findOne({ postId: post._id });
+    const postDetail = await PostDetail.findOne({ postId: id });
 
+    console.log("postDetail:", post);
 
     // to ckeck if the user is logged in and saved the above post
     let userId;
@@ -74,13 +75,19 @@ const addPost = async (req, res) => {
   const tokenUserId = req.userId;
 
   try {
-    const postDetailDoc = await PostDetail.create(body.postDetail);
+    console.log(body);
 
     const newPost = await Post.create({
       ...body.postData,
       userId: tokenUserId,
-      postDetail: postDetailDoc._id,
     });
+
+    // 2. Now create postDetail with the postId reference
+    const postDetailDoc = await PostDetail.create({
+      ...body.postDetail,
+      postId: newPost._id,
+    });
+
     res.status(201).json(newPost);
   } catch (error) {
     console.log(error);

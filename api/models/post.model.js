@@ -14,6 +14,7 @@ const postSchema = new mongoose.Schema({
   bathroom: { type: Number, required: true },
   latitude: { type: Number, required: true }, // Float in Prisma maps to Number in Mongoose
   longitude: { type: Number, required: true },
+
   type: {
     type: String,
     enum: TypeEnum, // Enforce enum values
@@ -26,7 +27,6 @@ const postSchema = new mongoose.Schema({
   },
   // One-to-Many relationship: A Post belongs to a User
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  postDetail: { type: mongoose.Schema.Types.ObjectId, ref: "PostDetail" },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   createdAt: { type: Date, default: Date.now },
 });

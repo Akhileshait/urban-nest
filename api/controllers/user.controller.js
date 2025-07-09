@@ -130,7 +130,7 @@ const profilePosts = async (req, res) => {
     console.log("Saved posts:", saved);
     console.log("User posts:", userPosts);
 
-    const savedPosts = saved.map((item) => item);
+    const savedPosts = saved.map((item) => item.postId);
 
     res.status(200).json({ userPosts, savedPosts });
   } catch (error) {
