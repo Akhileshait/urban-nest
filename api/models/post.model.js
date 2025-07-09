@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 // --- Enum Definitions (Mongoose handles these as simple strings with validation) ---
 const TypeEnum = ['buy', 'rent'];

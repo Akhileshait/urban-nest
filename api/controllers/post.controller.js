@@ -1,5 +1,6 @@
 import prisma from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
+import { Post, SavedPost } from "../models/post.model.js";
 
 const getPosts = async (req, res) => {
   const query = req.query;

@@ -1,9 +1,13 @@
-import prisma from "../lib/prisma.js";
+
 import bcrypt from "bcrypt";
+import User from "../models/user.model.js";
+import { SavedPost, Post } from "../models/post.model.js";
+import Chat from "../models/chat.model.js";
 
 const getUsers = async (req, res) => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await User.find();
+    console.log("Users fetched successfully:", users);
     res.status(200).json(users);
   } catch (error) {
     console.log(error);
@@ -16,7 +20,7 @@ const getUser = async (req, res) => {
 
   const id = req.userId;
   try {
-    const user = await prisma.user.findUnique({ where: { id: id } });
+    const user = await User.findById(id);
     res.status(200).json(user);
   } catch (error) {
     console.log(error);
@@ -29,6 +33,8 @@ const updateUser = async (req, res) => {
   const tokenUserId = req.userId;
   const { password, avatar, ...inputs } = req.body;
 
+  console.log("Updating user with ID:", id);
+
   if (id != tokenUserId) {
     return res
       .status(403)
@@ -40,14 +46,12 @@ const updateUser = async (req, res) => {
       hashedPassword = await bcrypt.hash(password, 10);
     }
 
-    const updatedUser = await prisma.user.update({
-      where: { id },
-      data: {
-        ...inputs,
-        ...(hashedPassword && { password: hashedPassword }),
-        ...(avatar && { avatar }),
-      },
+    const updatedUser = await User.findByIdAndUpdate(id, {
+      ...inputs,
+      ...(hashedPassword && { password: hashedPassword }),
+      ...(avatar && { avatar }),
     });
+
     res.status(200).json(updatedUser);
   } catch (error) {
     console.log(error);
@@ -65,9 +69,7 @@ const deleteUser = async (req, res) => {
   }
 
   try {
-    await prisma.user.delete({
-      where: { id },
-    });
+    await User.findByIdAndDelete(id);
     res.status(200).json({ message: "User deleted successfully!" });
   } catch (error) {
     console.log(error);
@@ -80,32 +82,25 @@ const savePost = async (req, res) => {
   const tokenUserId = req.userId;
 
   try {
-    const savedPost = await prisma.savedPost.findUnique({
-      where: {
-        userId_postId: {
-          userId: tokenUserId,
-          postId,
-        },
-      },
+    const savedPost = await SavedPost.findOne({
+      userId: tokenUserId, // Directly query by userId
+      postId: postId, // Directly query by postId
     });
 
     if (savedPost) {
       // If already saved, remove it
-      await prisma.savedPost.delete({
-        where: {
-          id: savedPost.id,
-        },
+      await SavedPost.deleteOne({
+        userId: tokenUserId,
+        postId: postId,
       });
       return res
         .status(200)
         .json({ message: "Post removed from saved list successfully!" });
     } else {
       // If not saved, create a new saved post
-      await prisma.savedPost.create({
-        data: {
-          userId: tokenUserId,
-          postId,
-        },
+      await SavedPost.create({
+        userId: tokenUserId,
+        postId,
       });
       return res.status(200).json({ message: "Post saved successfully!" });
     }
@@ -119,15 +114,12 @@ const profilePosts = async (req, res) => {
   console.log("Fetching profile posts...");
   const tokenUserId = req.params.id;
   try {
-    const userPosts = await prisma.post.findMany({
-      where: { userId: tokenUserId },
+    const userPosts = await Post.find({
+      userId: tokenUserId,
     });
-    const saved = await prisma.savedPost.findMany({
-      where: { userId: tokenUserId },
-      include: {
-        post: true,
-      },
-    });
+    const saved = await SavedPost.find({ userId: tokenUserId })
+      .populate("postId")
+      .exec();
 
     console.log("Saved posts:", saved);
     console.log("User posts:", userPosts);
@@ -144,17 +136,9 @@ const profilePosts = async (req, res) => {
 const getNotificationNumber = async (req, res) => {
   const tokenUserId = req.userId;
   try {
-    const number = await prisma.chat.count({
-      where: {
-        userIDs: {
-          hasSome: [tokenUserId],
-        },
-        NOT: {
-          seenBy: {
-            hasSome: [tokenUserId],
-          },
-        },
-      },
+    const number = await Chat.countDocuments({
+      userIDs: { $in: [tokenUserId] },
+      seenBy: { $nin: [tokenUserId] },
     });
     res.status(200).json(number);
   } catch (err) {

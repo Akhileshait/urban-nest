@@ -1,69 +1,79 @@
-import bcrypt from 'bcrypt';
-import prisma from '../lib/prisma.js';
-import jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt";
+import User from "../models/user.model.js";
+import jwt from "jsonwebtoken";
 
-const register =async (req, res)=>{
-     try {
-          
-          const {username, email, password} = req.body;
-          
-          const hashPass = await bcrypt.hash(password, 10);
-          
-          const newUser = await prisma.user.create({
-               data: {username, email, password: hashPass},
-          });
-          console.log(newUser);
-          
-          res.status(201).json({message:"User created successfully"});
-     } catch (error) {
-          console.log(error);
-          res.status(500).json({message:"Failed to create User!"});
-     }
-}
+const register = async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
 
-const login = async (req, res)=>{
-     const {username, password} = req.body;
+    const hashPass = await bcrypt.hash(password, 10);
 
-     try {
-          
-          const user = await prisma.user.findUnique({where: {username}});
+    const newUser = await User.create({
+      username,
+      email,
+      password: hashPass,
+    });
+    console.log(newUser);
 
-          if(!user){
-               return res.status(404).json({message:"Invalid credentials! User not found!"});
-          }
+    res.status(201).json({ message: "User created successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Failed to create User!" });
+  }
+};
 
-          const isPassValid = await bcrypt.compare(password, user.password);
+const login = async (req, res) => {
+  const { username, password } = req.body;
 
-          if(!isPassValid){
-               return res.status(401).json({message:"Invalid credentials! Password does not match!"});
-          }
-          const age = 1000*60*60*24*7;
+  console.log("Login attempt for user:", username);
 
-          const token = jwt.sign(
-          {
-               id:user.id,
-               isAdmin:false
-          }, 
-          process.env.JWT_SECRET_KEY, {expiresIn:age})
+  try {
+    const user = await User.findOne({
+      username,
+    });
 
-          const {password: userPassword, ...userInfo}= user;
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "Invalid credentials! User not found!" });
+    }
 
+    const isPassValid = await bcrypt.compare(password, user.password);
 
-          res.cookie("token", token, {
-               httpOnly:true,
-               maxAge:age,
-               // secure:true
-          }).status(200).json({userInfo});
+    if (!isPassValid) {
+      return res
+        .status(401)
+        .json({ message: "Invalid credentials! Password does not match!" });
+    }
+    const age = 1000 * 60 * 60 * 24 * 7;
 
-     } catch (err) {
-          console.log(err);
-          res.status(500).json({message:"Failed to login!"});
-     }
+    const token = jwt.sign(
+      {
+        id: user.id,
+        isAdmin: false,
+      },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: age }
+    );
 
-}
+    const { password: userPassword, ...userInfo } = user;
 
-const logout =async (req, res)=>{
-     res.clearCookie("token").status(200).json({message:"Logged out!"});
-}
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        maxAge: age,
+        // secure:true
+      })
+      .status(200)
+      .json({ userInfo });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to login!" });
+  }
+};
 
-export {register, login, logout};
+const logout = async (req, res) => {
+  res.clearCookie("token").status(200).json({ message: "Logged out!" });
+};
+
+export { register, login, logout };
