@@ -56,7 +56,7 @@ const login = async (req, res) => {
       { expiresIn: age }
     );
 
-    const { password: userPassword, ...userInfo } = user;
+    const { password: userPassword, ...userInfo } = user.toObject();
 
     res
       .cookie("token", token, {
@@ -65,7 +65,10 @@ const login = async (req, res) => {
         // secure:true
       })
       .status(200)
-      .json({ userInfo });
+      .json({
+        userInfo: userInfo,
+        message: "Logged in successfully!",
+      });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to login!" });

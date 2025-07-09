@@ -26,11 +26,17 @@ const getPosts = async (req, res) => {
 
 const getPost = async (req, res) => {
   const id = req.params.id;
+
+  console.log(`Getting post with ID: ${id}`);
+
   try {
-    const post = await Post.findById(id).populate("postDetail").populate({
+    const post = await Post.findById(id).populate({
       path: "user",
       select: "username avatar",
     });
+
+    const postDetail = await PostDetail.findOne({ postId: post._id });
+
 
     // to ckeck if the user is logged in and saved the above post
     let userId;
@@ -54,7 +60,9 @@ const getPost = async (req, res) => {
       postId: id,
     });
 
-    res.status(200).json({ ...post, isSaved: saved ? true : false });
+    res
+      .status(200)
+      .json({ ...post.toObject(), postDetail, isSaved: saved ? true : false });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Failed to get post!" });

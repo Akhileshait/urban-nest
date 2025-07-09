@@ -1,4 +1,3 @@
-
 import bcrypt from "bcrypt";
 import User from "../models/user.model.js";
 import { SavedPost, Post } from "../models/post.model.js";
@@ -81,6 +80,9 @@ const savePost = async (req, res) => {
   const postId = req.body.postId;
   const tokenUserId = req.userId;
 
+  console.log("Saving post with ID:", postId);
+  console.log("User ID:", tokenUserId);
+
   try {
     const savedPost = await SavedPost.findOne({
       userId: tokenUserId, // Directly query by userId
@@ -102,6 +104,8 @@ const savePost = async (req, res) => {
         userId: tokenUserId,
         postId,
       });
+      console.log("Post saved successfully!");
+
       return res.status(200).json({ message: "Post saved successfully!" });
     }
   } catch (error) {
@@ -112,11 +116,13 @@ const savePost = async (req, res) => {
 
 const profilePosts = async (req, res) => {
   console.log("Fetching profile posts...");
-  const tokenUserId = req.params.id;
+  const tokenUserId = req.userId;
   try {
     const userPosts = await Post.find({
       userId: tokenUserId,
     });
+
+    console.log(tokenUserId);
     const saved = await SavedPost.find({ userId: tokenUserId })
       .populate("postId")
       .exec();
@@ -124,7 +130,7 @@ const profilePosts = async (req, res) => {
     console.log("Saved posts:", saved);
     console.log("User posts:", userPosts);
 
-    const savedPosts = saved.map((item) => item.post);
+    const savedPosts = saved.map((item) => item);
 
     res.status(200).json({ userPosts, savedPosts });
   } catch (error) {

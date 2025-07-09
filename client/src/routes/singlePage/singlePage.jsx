@@ -16,12 +16,14 @@ function SinglePage() {
   const navigate = useNavigate();
 
   const handleSave = async () => {
+    console.log("handleSave called");
+
     if (!currentUser) {
       navigate("/login");
     }
     setSaved(!saved);
     try {
-      await apiRequest.post("/users/save", { postId: post.id });
+      await apiRequest.post("/users/save", { postId: post._id });
     } catch (error) {
       console.error("Error saving post:", error);
       setSaved(!saved); // Revert the saved state if the request fails

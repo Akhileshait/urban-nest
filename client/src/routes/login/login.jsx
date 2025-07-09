@@ -8,7 +8,7 @@ function Login() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const {updateUser} = useContext(AuthContext)
+  const { updateUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ function Login() {
       setIsLoading(false);
     }
   };
-  
+
   return (
     <div className="login">
       <div className="formContainer">
