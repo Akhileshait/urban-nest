@@ -1,21 +1,19 @@
 import prisma from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
-import { Post, SavedPost } from "../models/post.model.js";
+import { Post, SavedPost, PostDetail } from "../models/post.model.js";
 
 const getPosts = async (req, res) => {
   const query = req.query;
   console.log(query);
   try {
-    const posts = await prisma.post.findMany({
-      where: {
-        city: query.city || undefined,
-        type: query.type || undefined,
-        property: query.property || undefined,
-        bedroom: parseInt(query.bedroom) || undefined,
-        price: {
-          gte: parseInt(query.minPrice) || 0,
-          lte: parseInt(query.maxPrice) || 100000000,
-        },
+    const posts = await Post.find({
+      ...(query.city && { city: query.city }),
+      ...(query.type && { type: query.type }),
+      ...(query.property && { property: query.property }),
+      ...(query.bedroom && { bedroom: parseInt(query.bedroom) }),
+      price: {
+        $gte: query.minPrice ? parseInt(query.minPrice) : 0,
+        $lte: query.maxPrice ? parseInt(query.maxPrice) : 100000000,
       },
     });
 
@@ -29,17 +27,9 @@ const getPosts = async (req, res) => {
 const getPost = async (req, res) => {
   const id = req.params.id;
   try {
-    const post = await prisma.post.findUnique({
-      where: { id },
-      include: {
-        postDetail: true,
-        user: {
-          select: {
-            username: true,
-            avatar: true,
-          },
-        },
-      },
+    const post = await Post.findById(id).populate("postDetail").populate({
+      path: "user",
+      select: "username avatar",
     });
 
     // to ckeck if the user is logged in and saved the above post
@@ -59,13 +49,9 @@ const getPost = async (req, res) => {
       });
     }
 
-    const saved = await prisma.savedPost.findUnique({
-      where: {
-        userId_postId: {
-          userId,
-          postId: id,
-        },
-      },
+    const saved = await SavedPost.findOne({
+      userId: userId,
+      postId: id,
     });
 
     res.status(200).json({ ...post, isSaved: saved ? true : false });
@@ -80,14 +66,12 @@ const addPost = async (req, res) => {
   const tokenUserId = req.userId;
 
   try {
-    const newPost = await prisma.post.create({
-      data: {
-        ...body.postData,
-        userId: tokenUserId,
-        postDetail: {
-          create: body.postDetail,
-        },
-      },
+    const postDetailDoc = await PostDetail.create(body.postDetail);
+
+    const newPost = await Post.create({
+      ...body.postData,
+      userId: tokenUserId,
+      postDetail: postDetailDoc._id,
     });
     res.status(201).json(newPost);
   } catch (error) {
@@ -109,14 +93,14 @@ const deletePost = async (req, res) => {
   const tokenUserId = req.userId;
   console.log(tokenUserId);
   try {
-    const post = await prisma.post.findUnique({ where: { id } });
+    const post = await Post.findById(id);
 
     if (post.userId !== tokenUserId) {
       return res
         .status(403)
         .json({ message: "Unauthorized to delete this message" });
     }
-    await prisma.post.delete({ where: { id } });
+    await Post.findByIdAndDelete(id);
 
     res.status(200).json({ message: "Message deleted successfully" });
   } catch (error) {
