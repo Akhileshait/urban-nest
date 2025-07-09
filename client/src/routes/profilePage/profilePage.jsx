@@ -9,6 +9,8 @@ import { AuthContext } from "../../context/AuthContext";
 function ProfilePage() {
   const data = useLoaderData();
 
+  console.log(data);
+
   const { updateUser, currentUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -22,6 +24,7 @@ function ProfilePage() {
       console.log(err);
     }
   };
+
   return (
     <div className="profilePage">
       <div className="details">
@@ -56,7 +59,7 @@ function ProfilePage() {
               resolve={data.postResponse}
               errorElement={<p>Error loading posts!</p>}
             >
-              {(postResponse) => <List posts={postResponse.userPosts} />}
+              {(postResponse) => <List posts={postResponse?.data.userPosts} />}
             </Await>
           </Suspense>
           <div className="title">
@@ -67,21 +70,21 @@ function ProfilePage() {
               resolve={data.postResponse}
               errorElement={<p>Error loading posts!</p>}
             >
-              {(postResponse) => <List posts={postResponse.savedPosts} />}
+              {(postResponse) => <List posts={postResponse?.data.savedPosts} />}
             </Await>
           </Suspense>
         </div>
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-          {/* <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<p>Loading...</p>}>
             <Await
               resolve={data.chatResponse}
               errorElement={<p>Error loading chats!</p>}
             >
-              {(chatResponse) => <Chat chats={chatResponse.data} />}
+              {(chatResponse) => <Chat chats={chatResponse?.data} />}
             </Await>
-          </Suspense> */}
+          </Suspense>
         </div>
       </div>
     </div>

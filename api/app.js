@@ -2,6 +2,8 @@ import express from "express";
 import authRoute from "./routes/auth.routes.js";
 import postRoute from "./routes/post.routes.js";
 import userRoute from "./routes/user.routes.js";
+import chatRoute from "./routes/chat.routes.js";
+import messageRoute from "./routes/message.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import testRoute from "./routes/test.routes.js";

@@ -12,8 +12,9 @@ const getUsers = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const id = req.userId;
+  console.log(req.userId);
 
+  const id = req.userId;
   try {
     const user = await prisma.user.findUnique({ where: { id: id } });
     res.status(200).json(user);
@@ -116,12 +117,12 @@ const savePost = async (req, res) => {
 
 const profilePosts = async (req, res) => {
   console.log("Fetching profile posts...");
-  const tokenUserId = req.userId;
+  const tokenUserId = req.params.id;
   try {
     const userPosts = await prisma.post.findMany({
       where: { userId: tokenUserId },
     });
-    const saved = await prisma.post.findMany({
+    const saved = await prisma.savedPost.findMany({
       where: { userId: tokenUserId },
       include: {
         post: true,
@@ -140,7 +141,7 @@ const profilePosts = async (req, res) => {
   }
 };
 
-export const getNotificationNumber = async (req, res) => {
+const getNotificationNumber = async (req, res) => {
   const tokenUserId = req.userId;
   try {
     const number = await prisma.chat.count({

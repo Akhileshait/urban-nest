@@ -8,17 +8,17 @@ export const singlePageLoader = async ({ request, params }) => {
 
 export const listPageLoader = async ({ request, params }) => {
   const query = request.url.split("?")[1];
-  const postPromise = apiRequest("/posts?" + query);
+  const res = apiRequest("/posts?" + query);
   return defer({
-    postResponse: postPromise,
+    postResponse: res,
   });
 };
 
 export const profilePageLoader = async () => {
-  const postPromise = apiRequest("/users/profilePosts");
-  const chatPromise = apiRequest("/chats");
+  const postRes = apiRequest("/users/profilePosts");
+  const chatRes = apiRequest("/chats");
   return defer({
-    postResponse: postPromise,
-    chatResponse: chatPromise,
+    postResponse: postRes,
+    chatResponse: chatRes,
   });
 };

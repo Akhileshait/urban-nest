@@ -11,6 +11,8 @@ import { Suspense } from "react";
 function ListPage() {
   const posts = useLoaderData();
 
+  console.log(posts);
+
   return (
     <div className="listPage">
       <div className="listContainer">
@@ -19,11 +21,13 @@ function ListPage() {
 
           <Suspense fallback={<div>Loading...</div>}>
             <Await
-              resolve={posts.postResponse}
+              resolve={posts?.postResponse}
               errorElement={<div>Error loading post!</div>}
             >
               {(postResponse) =>
-                postResponse.map((item) => <Card key={item.id} item={item} />)
+                postResponse?.data.map((item) => (
+                  <Card key={item.id} item={item} />
+                ))
               }
             </Await>
           </Suspense>
@@ -33,10 +37,10 @@ function ListPage() {
       <div className="mapContainer">
         <Suspense fallback={<div>Loading...</div>}>
           <Await
-            resolve={posts.postResponse}
+            resolve={posts?.postResponse}
             errorElement={<div>Error loading post!</div>}
           >
-            {(postResponse) => <Map items={postResponse} />}
+            {(postResponse) => <Map items={postResponse?.data} />}
           </Await>
         </Suspense>
       </div>

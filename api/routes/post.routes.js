@@ -8,7 +8,6 @@ import {
   getPosts,
 } from "../controllers/post.controller.js";
 
-import { savePost } from "../controllers/user.controller.js";
 
 const router = express.Router();
 
