@@ -1,4 +1,4 @@
-import prisma from "../lib/prisma.js";
+
 import jwt from "jsonwebtoken";
 import { Post, SavedPost, PostDetail } from "../models/post.model.js";
 
