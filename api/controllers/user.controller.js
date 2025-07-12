@@ -115,7 +115,6 @@ const savePost = async (req, res) => {
 };
 
 const profilePosts = async (req, res) => {
-  console.log("Fetching profile posts...");
   const tokenUserId = req.userId;
   try {
     const userPosts = await Post.find({
@@ -126,9 +125,6 @@ const profilePosts = async (req, res) => {
     const saved = await SavedPost.find({ userId: tokenUserId })
       .populate("postId")
       .exec();
-
-    console.log("Saved posts:", saved);
-    console.log("User posts:", userPosts);
 
     const savedPosts = saved.map((item) => item.postId);
 

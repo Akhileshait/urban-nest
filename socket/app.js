@@ -29,7 +29,10 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendMessage", ({ receiverId, data }) => {
+    console.log(onlineUser);
+
     const receiver = getUser(receiverId);
+
     io.to(receiver.socketId).emit("getMessage", data);
   });
 

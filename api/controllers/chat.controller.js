@@ -1,16 +1,22 @@
 import prisma from "../lib/prisma.js";
 import Chat from "../models/chat.model.js";
+import User from "../models/user.model.js";
+import mongoose from "mongoose";
 
 export const getChats = async (req, res) => {
   const tokenUserId = req.userId;
 
+  console.log("Fetching chats for user:", tokenUserId);
+
   try {
     const chats = await Chat.find({
       userIDs: tokenUserId,
-    });
+    }).lean();
+
+    const userIdObject = new mongoose.Types.ObjectId(tokenUserId);
 
     for (const chat of chats) {
-      const receiverId = chat.userIDs.find((id) => id !== tokenUserId);
+      const receiverId = chat.userIDs.find((id) => !id.equals(userIdObject));
 
       const receiver = await User.findById(receiverId).select(
         "username avatar"
@@ -18,6 +24,8 @@ export const getChats = async (req, res) => {
 
       chat.receiver = receiver;
     }
+
+    console.log("Chats fetched successfully:", chats);
 
     res.status(200).json(chats);
   } catch (err) {

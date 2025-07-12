@@ -1,4 +1,3 @@
-
 import jwt from "jsonwebtoken";
 import { Post, SavedPost, PostDetail } from "../models/post.model.js";
 
@@ -36,8 +35,6 @@ const getPost = async (req, res) => {
     });
 
     const postDetail = await PostDetail.findOne({ postId: id });
-
-    console.log("postDetail:", post);
 
     // to ckeck if the user is logged in and saved the above post
     let userId;

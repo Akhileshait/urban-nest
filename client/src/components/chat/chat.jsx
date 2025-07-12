@@ -22,7 +22,9 @@ function Chat({ chats }) {
   const handleOpenChat = async (id, receiver) => {
     try {
       const res = await apiRequest("/chats/" + id);
-      if (!res.data.seenBy.includes(currentUser.id)) {
+      console.log(res.data);
+
+      if (!res.data.seenBy.includes(currentUser._id)) {
         decrease();
       }
       setChat({ ...res.data, receiver });
@@ -37,13 +39,15 @@ function Chat({ chats }) {
     const formData = new FormData(e.target);
     const text = formData.get("text");
 
+    console.log("Chat", chat);
+
     if (!text) return;
     try {
-      const res = await apiRequest.post("/messages/" + chat.id, { text });
-      setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }));
+      const res = await apiRequest.post("/messages/" + chat._id, { text });
+      // setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }));
       e.target.reset();
       socket.emit("sendMessage", {
-        receiverId: chat.receiver.id,
+        receiverId: chat.receiver._id,
         data: res.data,
       });
     } catch (err) {
@@ -83,11 +87,11 @@ function Chat({ chats }) {
             key={c.id}
             style={{
               backgroundColor:
-                c.seenBy.includes(currentUser.id) || chat?.id === c.id
+                c.seenBy.includes(currentUser._id) || chat?._id === c._id
                   ? "white"
                   : "#fecd514e",
             }}
-            onClick={() => handleOpenChat(c.id, c.receiver)}
+            onClick={() => handleOpenChat(c._id, c.receiver)}
           >
             <img src={c.receiver.avatar || "/noavatar.jpg"} alt="" />
             <span>{c.receiver.username}</span>
@@ -107,7 +111,7 @@ function Chat({ chats }) {
             </span>
           </div>
           <div className="center">
-            {chat.messages.map((message) => (
+            {chat?.messages.map((message) => (
               <div
                 className="chatMessage"
                 style={{
