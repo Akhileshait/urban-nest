@@ -12,7 +12,7 @@ const postSchema = new mongoose.Schema({
   city: { type: String, required: true },
   bedroom: { type: Number, required: true },
   bathroom: { type: Number, required: true },
-  latitude: { type: Number, required: true }, // Float in Prisma maps to Number in Mongoose
+  latitude: { type: Number, required: true },
   longitude: { type: Number, required: true },
 
   type: {

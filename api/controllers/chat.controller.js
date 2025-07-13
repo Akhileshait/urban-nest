@@ -1,4 +1,4 @@
-import prisma from "../lib/prisma.js";
+
 import Chat from "../models/chat.model.js";
 import User from "../models/user.model.js";
 import mongoose from "mongoose";
