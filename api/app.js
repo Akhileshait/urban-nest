@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import testRoute from "./routes/test.routes.js";
 import dotenv from "dotenv";
+import io from "./socket/socket.js";
+io.listen("4000");
 dotenv.config();
 
 import mongoose from "mongoose";
