@@ -1,18 +1,20 @@
 import "./singlePage.scss";
 import Slider from "../../components/slider/slider";
-import { singlePostData, userData } from "../../lib/dummy_data";
 import Map from "../../components/map/map";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
+import { useEffect } from "react";
 
 function SinglePage() {
   const post = useLoaderData();
+  console.log(post);
 
   const [saved, setSaved] = useState(post.isSaved);
   const { currentUser } = useContext(AuthContext);
+  const [author, setAuthor] = useState(null);
   const navigate = useNavigate();
 
   const handleSave = async () => {
@@ -30,6 +32,19 @@ function SinglePage() {
     }
   };
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await apiRequest.get(`/users/${post.userId}`);
+        setAuthor(res.data);
+        console.log("Fetched User:", res.data);
+      } catch (error) {
+        console.error("Error fetching User:", error);
+      }
+    };
+    fetchUser();
+  }, []);
+
   return (
     <div className="singlePage">
       <div className="details">
@@ -46,8 +61,8 @@ function SinglePage() {
                 <div className="price">$ {post.price}</div>
               </div>
               <div className="user">
-                <img src={userData.img} alt="" />
-                <span>{userData.name}</span>
+                <img src={author?.avatar} alt="" />
+                <span>{author?.username}</span>
               </div>
             </div>
             <div

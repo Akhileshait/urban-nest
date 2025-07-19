@@ -15,9 +15,7 @@ const getUsers = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  console.log(req.userId);
-
-  const id = req.userId;
+  const id = req.params.id;
   try {
     const user = await User.findById(id);
     res.status(200).json(user);
