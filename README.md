@@ -1,4 +1,4 @@
-# EstateFlow: Your Real Estate Hub
+# UrbanNest: Your Real Estate Hub
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -17,7 +17,7 @@
 
 ## About the Project
 
-EstateFlow is a modern, full-stack web application designed to simplify the process of buying, selling, and renting real estate. Built with the MERN stack, it provides a seamless experience for users to browse a wide array of properties, view detailed listings with images and features, and connect directly with sellers in real-time. With interactive mapping powered by OpenStreetMap, users can easily locate properties, while the integrated real-time chat (via Socket.IO) fosters immediate communication. Whether you're searching for your dream home or looking to list your property, EstateFlow offers an intuitive and efficient platform.
+UrbanNest is a modern, full-stack web application designed to simplify the process of buying, selling, and renting real estate. Built with the MERN stack, it provides a seamless experience for users to browse a wide array of properties, view detailed listings with images and features, and connect directly with sellers in real-time. With interactive mapping powered by OpenStreetMap, users can easily locate properties, while the integrated real-time chat (via Socket.IO) fosters immediate communication. Whether you're searching for your dream home or looking to list your property, EstateFlow offers an intuitive and efficient platform.
 
 ## Features
 
@@ -32,7 +32,7 @@ EstateFlow is a modern, full-stack web application designed to simplify the proc
 
 ## Tech Stack
 
-EstateFlow is built using the following technologies:
+UrbanNest is built using the following technologies:
 
 **Frontend:**
 * **React.js:** A JavaScript library for building user interfaces.
@@ -59,64 +59,6 @@ Before you begin, ensure you have the following installed:
 * **Node.js & npm:** [Download Node.js](https://nodejs.org/en/download/) (npm is included with Node.js)
 * **MongoDB:** [Install MongoDB Community Server](https://docs.mongodb.com/manual/installation/)
     * Ensure your MongoDB instance is running (e.g., `mongod` in your terminal).
-
-### Installation
-
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/your-username/estateflow.git](https://github.com/your-username/estateflow.git)
-    cd estateflow
-    ```
-
-2.  **Backend Setup:**
-    Navigate to the `backend` directory, install dependencies, and set up environment variables.
-
-    ```bash
-    cd backend
-    npm install
-    ```
-
-    Create a `.env` file in the `backend` directory with the following content:
-
-    ```
-    PORT=5000
-    MONGO_URI=mongodb://localhost:27017/estateflow_db
-    JWT_SECRET=your_jwt_secret_key_here
-    ```
-    * `PORT`: The port your backend server will run on.
-    * `MONGO_URI`: Your MongoDB connection string.
-    * `JWT_SECRET`: A strong, random string for signing JWTs. Generate a complex one.
-
-    Start the backend server:
-
-    ```bash
-    npm start
-    ```
-    The backend server should now be running, typically on `http://localhost:5000`.
-
-3.  **Frontend Setup:**
-    Open a new terminal, navigate to the `frontend` directory, install dependencies, and set up environment variables.
-
-    ```bash
-    cd ../frontend
-    npm install
-    ```
-
-    Create a `.env` file in the `frontend` directory with the following content:
-
-    ```
-    REACT_APP_API_BASE_URL=http://localhost:5000/api
-    REACT_APP_SOCKET_IO_URL=http://localhost:5000
-    ```
-    * `REACT_APP_API_BASE_URL`: The base URL for your backend API endpoints.
-    * `REACT_APP_SOCKET_IO_URL`: The URL for your Socket.IO connection.
-
-    Start the frontend development server:
-
-    ```bash
-    npm start
-    ```
-    The frontend application should now open in your browser, typically at `http://localhost:3000`.
 
 ## Usage
 
@@ -146,7 +88,3 @@ Don't forget to give the project a star! Thanks again!
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-## Contact
-
-Your Name - [your.email@example.com](mailto:your.email@example.com)
-Project Link: [https://github.com/your-username/estateflow](https://github.com/your-username/estateflow)
