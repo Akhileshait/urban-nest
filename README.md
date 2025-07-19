@@ -17,7 +17,7 @@
 
 ## About the Project
 
-UrbanNest is a modern, full-stack web application designed to simplify the process of buying, selling, and renting real estate. Built with the MERN stack, it provides a seamless experience for users to browse a wide array of properties, view detailed listings with images and features, and connect directly with sellers in real-time. With interactive mapping powered by OpenStreetMap, users can easily locate properties, while the integrated real-time chat (via Socket.IO) fosters immediate communication. Whether you're searching for your dream home or looking to list your property, EstateFlow offers an intuitive and efficient platform.
+UrbanNest is a modern, full-stack web application designed to simplify the process of buying, selling, and renting real estate. Built with the MERN stack, it provides a seamless experience for users to browse a wide array of properties, view detailed listings with images and features, and connect directly with sellers in real-time. With interactive mapping powered by OpenStreetMap, users can easily locate properties, while the integrated real-time chat (via Socket.IO) fosters immediate communication. Whether you're searching for your dream home or looking to list your property, UrbanNest offers an intuitive and efficient platform.
 
 ## Features
 
