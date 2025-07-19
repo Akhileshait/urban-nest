@@ -15,6 +15,8 @@ function Filter() {
   });
 
   const handleChange = (e) => {
+    console.log("Filter change:", e.target.name, e.target.value);
+
     setQuery({ ...query, [e.target.name]: e.target.value });
   };
 
@@ -44,7 +46,12 @@ function Filter() {
       <div className="bottom">
         <div className="item">
           <label htmlFor="type">Type</label>
-          <select name="type" id="type">
+          <select
+            name="type"
+            id="type"
+            onClick={handleChange}
+            defaultValue={query.type}
+          >
             <option value="">any</option>
             <option value="buy">Buy</option>
             <option value="rent">Rent</option>
@@ -52,7 +59,12 @@ function Filter() {
         </div>
         <div className="item">
           <label htmlFor="property">Property</label>
-          <select name="propert" id="property">
+          <select
+            name="property"
+            id="property"
+            onClick={handleChange}
+            defaultValue={query.property}
+          >
             <option value="">any</option>
             <option value="apartment">Apartment</option>
             <option value="house">House</option>

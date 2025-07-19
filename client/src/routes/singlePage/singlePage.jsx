@@ -7,6 +7,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 import { useEffect } from "react";
+import ChatBox from "../../components/chat/chatBox";
 
 function SinglePage() {
   const post = useLoaderData();
@@ -15,6 +16,7 @@ function SinglePage() {
   const [saved, setSaved] = useState(post.isSaved);
   const { currentUser } = useContext(AuthContext);
   const [author, setAuthor] = useState(null);
+  const [toggleChat, setToggleChat] = useState(false);
   const navigate = useNavigate();
 
   const handleSave = async () => {
@@ -151,8 +153,11 @@ function SinglePage() {
           <div className="mapContainer">
             <Map items={[post]}></Map>
           </div>
+          <div className="chat-box">
+            {toggleChat && <ChatBox receiverId={post.userId} />}
+          </div>
           <div className="buttons">
-            <button>
+            <button onClick={() => setToggleChat(!toggleChat)}>
               <img src="/chat.png" alt="" />
               Send a Message
             </button>

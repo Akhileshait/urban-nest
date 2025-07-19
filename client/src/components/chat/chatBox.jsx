@@ -1,31 +1,33 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import "./chat.scss";
 import { AuthContext } from "../../context/AuthContext";
+import { SocketContext } from "../../context/SocketContext";
 import apiRequest from "../../lib/apiRequest";
 import { format } from "timeago.js";
-import { SocketContext } from "../../context/SocketContext";
+import "./chat.scss";
 
-function Chat({ chats }) {
+function ChatBox({ receiverId }) {
   const [chat, setChat] = useState(null);
   const { currentUser } = useContext(AuthContext);
-  const { socket } = useContext(SocketContext);
-
+  const socket = useContext(SocketContext);
   const messageEndRef = useRef();
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
 
-  const handleOpenChat = async (id, receiver) => {
-    try {
-      const res = await apiRequest("/chats/" + id);
-      console.log(res.data);
+  useEffect(() => {
+    const handleOpenChat = async (id, receiver) => {
+      try {
+        const res = await apiRequest("/chats/" + id);
+        console.log(res.data);
 
-      setChat({ ...res.data, receiver });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+        setChat({ ...res.data, receiver });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    handleOpenChat(currentUser._id, receiverId);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,50 +51,8 @@ function Chat({ chats }) {
     }
   };
 
-  useEffect(() => {
-    const read = async () => {
-      try {
-        await apiRequest.put("/chats/read/" + chat.id);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    if (chat && socket) {
-      socket.on("getMessage", (data) => {
-        if (chat.id === data.chatId) {
-          setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
-          read();
-        }
-      });
-    }
-    return () => {
-      socket.off("getMessage");
-    };
-  }, [socket, chat]);
-
   return (
-    <div className="chat">
-      <div className="messages">
-        <h1>Messages</h1>
-        {chats?.map((c) => (
-          <div
-            className="message"
-            key={c._id}
-            style={{
-              backgroundColor:
-                c.seenBy.includes(currentUser._id) || chat?._id === c._id
-                  ? "white"
-                  : "#fecd514e",
-            }}
-            onClick={() => handleOpenChat(c._id, c.receiver)}
-          >
-            <img src={c.receiver.avatar || "/noavatar.jpg"} alt="" />
-            <span>{c.receiver.username}</span>
-            <p>{c.lastMessage}</p>
-          </div>
-        ))}
-      </div>
+    <div className="chatContainer">
       {chat && (
         <div className="chatBox">
           <div className="top">
@@ -105,7 +65,7 @@ function Chat({ chats }) {
             </span>
           </div>
           <div className="center">
-            {chat?.messages.map((message) => (
+            {/* {chat?.messages.map((message) => (
               <div
                 className="chatMessage"
                 style={{
@@ -121,7 +81,7 @@ function Chat({ chats }) {
                 <p>{message.text}</p>
                 <span>{format(message.createdAt)}</span>
               </div>
-            ))}
+            ))} */}
             <div ref={messageEndRef}></div>
           </div>
           <form onSubmit={handleSubmit} className="bottom">
@@ -134,4 +94,4 @@ function Chat({ chats }) {
   );
 }
 
-export default Chat;
+export default ChatBox;

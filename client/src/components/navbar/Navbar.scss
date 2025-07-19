@@ -24,6 +24,29 @@ nav {
     align-items: center;
     gap: 50px;
 
+    .links{
+      flex: 3;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      
+
+      a {
+        color: black;
+        font-weight: 500;
+        text-decoration: none;
+        padding: 8px;
+        border-radius: 10px;
+
+        &:hover {
+          color: #e7ad1b;
+          background-color: rgb(102, 102, 102);
+          font-weight: bold;
+          
+        }
+      }
+    }
+
     .logo {
       font-weight: bold;
       font-size: 20px;
