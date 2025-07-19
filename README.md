@@ -1,2 +1,2 @@
 # urban-nest
-Real Estate web application using MERN Stack and Redux toolkit with real time chat feature
+Real Estate web application using MERN Stack with real time chat using socket io feature
