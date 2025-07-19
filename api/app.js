@@ -7,6 +7,8 @@ import messageRoute from "./routes/message.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import testRoute from "./routes/test.routes.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 import mongoose from "mongoose";
 

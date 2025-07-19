@@ -33,7 +33,11 @@ io.on("connection", (socket) => {
 
     const receiver = getUser(receiverId);
 
-    io.to(receiver.socketId).emit("getMessage", data);
+    console.log("Receiver:", receiver);
+
+    if (receiver) {
+      io.to(receiver.socketId).emit("getMessage", data);
+    }
   });
 
   socket.on("disconnect", () => {

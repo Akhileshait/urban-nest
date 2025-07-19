@@ -1,4 +1,3 @@
-
 import Chat from "../models/chat.model.js";
 import User from "../models/user.model.js";
 import mongoose from "mongoose";
@@ -45,6 +44,8 @@ export const getChat = async (req, res) => {
       path: "messages",
       options: { sort: { createdAt: 1 } }, // sort messages by createdAt ASC
     });
+
+    console.log("Chat fetched successfully:", chat);
 
     await Chat.findByIdAndUpdate(req.params.id, {
       $addToSet: { seenBy: tokenUserId },

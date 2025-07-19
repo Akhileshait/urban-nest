@@ -44,7 +44,7 @@ function Chat({ chats }) {
     if (!text) return;
     try {
       const res = await apiRequest.post("/messages/" + chat._id, { text });
-      // setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }));
+      setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }));
       e.target.reset();
       socket.emit("sendMessage", {
         receiverId: chat.receiver._id,
@@ -84,7 +84,7 @@ function Chat({ chats }) {
         {chats?.map((c) => (
           <div
             className="message"
-            key={c.id}
+            key={c._id}
             style={{
               backgroundColor:
                 c.seenBy.includes(currentUser._id) || chat?._id === c._id
@@ -116,13 +116,13 @@ function Chat({ chats }) {
                 className="chatMessage"
                 style={{
                   alignSelf:
-                    message.userId === currentUser.id
+                    message.userId === currentUser._id
                       ? "flex-end"
                       : "flex-start",
                   textAlign:
-                    message.userId === currentUser.id ? "right" : "left",
+                    message.userId === currentUser._id ? "right" : "left",
                 }}
-                key={message.id}
+                key={message._id}
               >
                 <p>{message.text}</p>
                 <span>{format(message.createdAt)}</span>
